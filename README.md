@@ -17,13 +17,13 @@ Este projeto representa um serviço criado para execução de comandos remotamen
 
 *Importante*: Desinstale o serviço antes de compilar novamente a Solução.
 
-#### Instalando o serviço sem necessidade do Visual Studio
+## Instalando o serviço sem necessidade do Visual Studio
 * Baixe a pasta **Instalação** no diretório raiz deste repositório
 * Clique com o botão direito no arquivo **Instalar Servico BatteRoyale.bat** e selecione **Executar como administrador**
 * Uma tela da linha de comando abrirá, instalará o serviço e o ativará.
 * Aperte qualquer botão para sair da instalação.
 
-#### Testando o serviço
+## Testando o serviço
 
 Após a instalação do serviço, ele estará rodando em background e ouvindo as solicitações do servidor.
 
@@ -33,9 +33,10 @@ dele e não aparecerá na sua lista de clientes cadastrados.
 Mesmo assim, ainda é possível testar o serviço fazendo requisições HTTP para ele e esperando o resultado.
 
 * Abra um software de testes de requisições HTTP, como o Postman, SoapUI, ou mesmo o browser para testar.
-* Faça uma requisição GET para http://localhost/handshake, deve retornar true
-* Faça uma requisição POST para http://localhost/receivecommand passando um comando (tal como "dir"), deve retornar um json com o resultado.
-* Faça uma requisição POST para http://localhost/clientinformation e você receberá os dados coletados da máquina
+* Verifique qual é seu **IP local**: abra a linha de comando digite **ipconfig** e copie o **Endereço IPv4**
+* Faça uma requisição GET para http://<IPLocal>/handshake, deve retornar true
+* Faça uma requisição POST para http://<IPLocal>/receivecommand passando um comando (tal como "dir"), deve retornar um json com o resultado.
+* Faça uma requisição POST para http://<IPLocal>/clientinformation e você receberá os dados coletados da máquina
 
 
 
