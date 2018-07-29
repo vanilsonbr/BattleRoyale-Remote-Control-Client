@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,50 +37,79 @@ namespace BatteRoyale.RemoteController.Client
 
             string command = shell == CommandShell.Cmd ? "cmd.exe" : "powershell.exe";
 
-            // code taken from https://msdn.microsoft.com/en-us/library/system.diagnostics.process.standardoutput.aspx
-            Process process = new Process();
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.WorkingDirectory = _workingDirectory;
-            process.StartInfo.FileName = command;
-            process.StartInfo.Arguments = "/C " + arguments;
-
-            process.Start();
-
-            string output = process.StandardOutput.ReadToEnd();
-            bool success = process.HasExited && process.ExitCode == 0;
-            string error = "";
-
-            process.WaitForExit();
-
+            string nextDirectory = _workingDirectory;
+            #region testing if the command is 'cd' and treat it. Verify if the dir (new path) exists]
             if (fetchCommand(arguments) == "cd")
             {
-                if (success)
+                string path = fetchPathFromCdCommand(arguments);
+                nextDirectory = $"{_workingDirectory}\\{path}\\";
+                try
                 {
-                    string path = fetchPathFromCdCommand(arguments);
-                    _workingDirectory = _workingDirectory + path + @"\";
+                    nextDirectory = Path.GetFullPath(nextDirectory);
+                    bool directoryExists = Directory.Exists(nextDirectory);
+                    if (!directoryExists)
+                    {
+                        throw new Exception();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    // significa que o caminho especificado não foi encontrado
-                    error = "O sistema não pôde encontrar o caminho especificado";
+                    // the path doesnt exist
+                    return new CommandResult
+                    {
+                        WorkingDirectory = _workingDirectory,
+                        Result = "O sistema não pode encontrar o caminho especificado.",
+                        CommandSent = arguments,
+                        Success = false
+                    };
                 }
-            } else
-            {
-                if(!success)
-                {
-                    error = "O sistema não conseguiu executar o comando solicitado";
-                }
-            }
 
-            return new CommandResult
+            }
+            #endregion
+
+            try
             {
-                WorkingDirectory = _workingDirectory,
-                CommandSent = arguments,
-                Success = success,
-                Result = output,
-                Error = error
-            };
+                // code taken from https://msdn.microsoft.com/en-us/library/system.diagnostics.process.standardoutput.aspx
+                Process process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.WorkingDirectory = _workingDirectory;
+                process.StartInfo.FileName = command;
+                process.StartInfo.Arguments = "/C " + arguments;
+
+                process.Start();
+
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                bool success = process.HasExited && process.ExitCode == 0;
+
+
+                // wait for 20 seconds
+                bool exited =  process.WaitForExit(20000);
+
+                _workingDirectory = nextDirectory;
+
+                return new CommandResult
+                {
+                    WorkingDirectory = _workingDirectory,
+                    CommandSent = arguments,
+                    Success = success,
+                    Result = output,
+                    Error = error
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CommandResult
+                {
+                    WorkingDirectory = _workingDirectory,
+                    CommandSent = arguments,
+                    Success = false,
+                    Result = "",
+                    Error = ex.Message
+                };
+            }
 
         }
 
