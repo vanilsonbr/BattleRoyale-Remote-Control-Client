@@ -2,12 +2,13 @@ cd /d %~dp0
 
 @echo OFF
 echo Stopping old service version...
-net stop "BattleRoyaleRemoteController"
+net stop "BattleRoyalleRemoteController"
 echo Uninstalling old service version...
-sc delete "BattleRoyaleRemoteController"
+sc delete "BattleRoyalleRemoteController"
 
 echo Installing service...
 
-sc create BattleRoyaleRemoteController binpath= \"%~dp0\BattleRoyalle.RemoteController.Client.exe\" start= auto
-echo Starting server complete
+sc create BattleRoyalleRemoteController binpath= \"%~dp0\BattleRoyalle.RemoteController.Client.exe\" start= auto
+echo Starting service...
+net start "BattleRoyalleRemoteController"
 pause
