@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatteRoyale.RemoteController.Client", "BatteRoyale.RemoteController.Client\BatteRoyale.RemoteController.Client.csproj", "{7038F6FC-7476-4A95-A689-0130673D550C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Client", "1 - Client", "{CF7D77E3-2D20-4EA7-8938-2C450EA0A750}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Test", "2 - Test", "{692799F7-8B7A-4E1F-90B6-762088F5F8EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleRoyale.RemoteController.Client.Test", "BattleRoyale.RemoteController.Client.Test\BattleRoyale.RemoteController.Client.Test.csproj", "{F4559991-4FAE-4A0B-B078-B19906A4378B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,17 @@ Global
 		{7038F6FC-7476-4A95-A689-0130673D550C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7038F6FC-7476-4A95-A689-0130673D550C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7038F6FC-7476-4A95-A689-0130673D550C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4559991-4FAE-4A0B-B078-B19906A4378B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4559991-4FAE-4A0B-B078-B19906A4378B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4559991-4FAE-4A0B-B078-B19906A4378B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4559991-4FAE-4A0B-B078-B19906A4378B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7038F6FC-7476-4A95-A689-0130673D550C} = {CF7D77E3-2D20-4EA7-8938-2C450EA0A750}
+		{F4559991-4FAE-4A0B-B078-B19906A4378B} = {692799F7-8B7A-4E1F-90B6-762088F5F8EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10B3989A-21AB-4B6D-8F47-533E0A629D7C}
