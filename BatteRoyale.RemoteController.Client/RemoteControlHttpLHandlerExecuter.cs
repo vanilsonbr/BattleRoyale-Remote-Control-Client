@@ -81,7 +81,7 @@ namespace BatteRoyale.RemoteController.Client
 
                         if(!output.Success)
                         {
-                            Logger.WriteEntry($"Error reported while executing command '{requestInfo.BodyString}': {output.Error}", type: EventLogEntryType.Error);
+                            Logger.WriteEntry($"Error reported while executing command '{requestInfo.BodyString}': {output.Result}", type: EventLogEntryType.Error);
                         }
 
                         return output;

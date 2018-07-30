@@ -90,13 +90,14 @@ namespace BatteRoyale.RemoteController.Client
 
                 _workingDirectory = nextDirectory;
 
+                string result = string.IsNullOrEmpty(error) ? $"\n{output}" : $"{error}{output}";
+
                 return new CommandResult
                 {
                     WorkingDirectory = _workingDirectory,
                     CommandSent = arguments,
                     Success = success,
-                    Result = output,
-                    Error = error
+                    Result = result
                 };
             }
             catch (Exception ex)
@@ -106,8 +107,7 @@ namespace BatteRoyale.RemoteController.Client
                     WorkingDirectory = _workingDirectory,
                     CommandSent = arguments,
                     Success = false,
-                    Result = "",
-                    Error = ex.Message
+                    Result = ex.Message
                 };
             }
 
